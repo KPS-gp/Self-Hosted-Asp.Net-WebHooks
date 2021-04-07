@@ -17,9 +17,15 @@ namespace WebApiHost
                     new { id = RouteParameter.Optional }
                 );
 
+            // Load basic support for sending WebHooks
             config.InitializeCustomWebHooks();
-            config.InitializeCustomWebHooksApis();
 
+            // Use SQL for persisting subscriptions
+            config.InitializeCustomWebHooksSqlStorage();
+
+            // Load Web API controllers for managing subscriptions
+            config.InitializeCustomWebHooksApis();
+            
             var listener = (HttpListener)appBuilder.Properties["System.Net.HttpListener"];
             listener.AuthenticationSchemes = AuthenticationSchemes.IntegratedWindowsAuthentication;
 
